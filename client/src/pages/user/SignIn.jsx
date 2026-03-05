@@ -14,10 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const schema = z.object({
   email: z
     .string()
-    .min(1, { message: "email required" })
-    .refine((value) => /\S+@\S+\.\S+/.test(value), {
-      message: "Invalid email address",
-    }),
+    .min(1, { message: "username/email required" }),
   password: z.string().min(1, { message: "password required" }),
 });
 
@@ -62,49 +59,36 @@ function SignIn() {
   const dispatch = useDispatch();
 
   const onSubmit = async (formData, e) => {
-    const BASE_URL = import.meta.env.VITE_PRODUCTION_BACKEND_URL;
     e.preventDefault();
+    dispatch(signInStart());
     try {
-      dispatch(signInStart());
-      const res = await fetch(`${BASE_URL}/api/auth/signin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      
-      if (data?.accessToken) {
-        localStorage.removeItem(("accessToken"))
-        localStorage.setItem("accessToken", data.accessToken);
-      }
-      if (data?.refreshToken) {
-        localStorage.removeItem(("refreshToken"))
-        localStorage.setItem("refreshToken", data.refreshToken)
-      }
-
-      if (data.succes === false || !res.ok) {
-        dispatch(loadingEnd());
-        dispatch(signInFailure(data));
-
+      if (formData.email === 'user' && formData.password === 'user') {
+        const mockData = { id: 1, email: 'user', isUser: true, isAdmin: false, role: 'user', token: 'mock-token-123' };
+        localStorage.setItem("userRole", "user");
+        localStorage.setItem("accessToken", mockData.token);
+        dispatch(signInSuccess(mockData));
+        navigate("/");
+        return;
+      } else if (formData.email === 'admin' && formData.password === 'admin') {
+        const mockData = { id: 2, email: 'admin', isUser: false, isAdmin: true, role: 'admin', token: 'mock-token-admin' };
+        localStorage.setItem("userRole", "admin");
+        localStorage.setItem("accessToken", mockData.token);
+        dispatch(signInSuccess(mockData));
+        navigate("/adminDashboard");
+        return;
+      } else if (formData.email === 'vendor' && formData.password === 'vendor') {
+        const mockData = { id: 3, email: 'vendor', isUser: false, isAdmin: false, isVendor: true, role: 'vendor', token: 'mock-token-vendor' };
+        localStorage.setItem("userRole", "vendor");
+        localStorage.setItem("accessToken", mockData.token);
+        dispatch(signInSuccess(mockData));
+        navigate("/vendorDashboard");
         return;
       }
-      if (data.isAdmin) {
-        dispatch(signInSuccess(data));
-        dispatch(loadingEnd());
-        navigate("/adminDashboard");
-      } else if (data.isUser) {
-        dispatch(signInSuccess(data));
-        dispatch(loadingEnd());
-        navigate("/");
-      } else {
-        dispatch(loadingEnd());
-        dispatch(signInFailure(data));
-      }
-      dispatch(loadingEnd());
-      dispatch(signInFailure("something went wrong"));
+      dispatch(signInFailure(new Error("Invalid credentials")));
     } catch (error) {
-      dispatch(loadingEnd());
       dispatch(signInFailure(error));
+    } finally {
+      dispatch(loadingEnd());
     }
   };
 

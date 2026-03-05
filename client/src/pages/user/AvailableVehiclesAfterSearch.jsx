@@ -46,11 +46,11 @@ const AvailableVehiclesAfterSearch = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       {availableCars && availableCars.length > 0 && (
-        <div className="text-center flex flex-col  mt-10 justify-center items-center sm:max-w-[500px] mx-auto">
-          <h2 className="text-[18px] lg:text-[24px]">Choose From Options</h2>
-          <p className="text-center text-[8px] px-6  lg:text-[12px]  lg:w-[550px]">
+        <div className="text-center d-flex flex-column justify-content-center align-items-center mx-auto" style={{ maxWidth: "500px" }}>
+          <h2 className="fs-5 fs-lg-4">Choose From Options</h2>
+          <p className="text-center small px-3 text-muted" style={{ maxWidth: "550px" }}>
             Choose from our modern variety vehicles colllection . Feel like home
             just like your own car Our clients have experienced our service and
             results, and they are eager to share their positive experiences with
@@ -59,69 +59,51 @@ const AvailableVehiclesAfterSearch = () => {
         </div>
       )}
 
-      <div className=" mx-auto flex sm:flex-row  w-full  lg:grid lg:max-w-[1000px]  lg:grid-cols-3 justify-center items-center gap-5 flex-wrap mt-10 drop-shadow-md">
+      <div className="row justify-content-center mt-5 row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-auto" style={{ maxWidth: "1000px" }}>
         {availableCars &&
           availableCars.map(
             (cur, idx) =>
               cur.isDeleted === "false" && (
-                <div
-                  className="bg-white box-shadow rounded-lg  drop-shadow "
-                  key={idx}
-                >
-                  <div className="mx-auto max-w-[320px] px-4 py-2 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden object-contain rounded-md bg-white lg:aspect-none group-hover:opacity-75 lg:h-80 mb-3">
-                      <img
-                        src={`${cur.image[0]}`}
-                        alt={`cur.name`}
-                        className=" w-full object-contain object-center lg:h-full lg:w-full"
-                      />
-                    </div>
-                    <div className="flex justify-between items-start">
-                      <h2 className="text-[14px] capitalize font-semibold tracking-tight text-gray-900">
-                        <span></span>
-                        {cur.name}
-                      </h2>
-
-                      <div className="text-[14px]  flex flex-col items-end">
-                        <p className="font-semibold">{cur.price}</p>
-                        <div className="text-[6px] relative bottom-[3px]">
-                          Per Day
+                <div className="col" key={idx}>
+                  <div className="card h-100 shadow-sm border-0">
+                    <img
+                      src={`${cur.image[0]}`}
+                      className="card-img-top object-fit-contain p-3"
+                      alt={cur.name}
+                      style={{ height: '250px' }}
+                    />
+                    <div className="card-body">
+                      <div className="d-flex justify-content-between align-items-start mb-3">
+                        <h5 className="card-title text-capitalize mb-0 fs-6 fw-bold">
+                          {cur.name}
+                        </h5>
+                        <div className="text-end">
+                          <p className="fw-bold mb-0">${cur.price}</p>
+                          <small className="text-muted" style={{ fontSize: "10px" }}>Per Day</small>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="my-2 font-mono">
-                      <div className="flex justify-between items-center mb-5 mt-5">
-                        <h3 className="text-[12px] flex justify-between items-center gap-1 ">
-                          <span>
-                            <FaCarSide />
-                          </span>
-                          {cur.company}
-                        </h3>
-                        <p className=" text-end text-[12px] flex justify-between items-center gap-1">
-                          <span>
-                            <MdAirlineSeatReclineNormal />
-                          </span>
-                          {cur.seats}
-                        </p>
+                      <div className="d-flex justify-content-between align-items-center mb-3 text-secondary small">
+                        <span className="d-flex align-items-center gap-2">
+                          <FaCarSide /> {cur.company}
+                        </span>
+                        <span className="d-flex align-items-center gap-2">
+                          <MdAirlineSeatReclineNormal /> {cur.seats} Seats
+                        </span>
                       </div>
-                      <div className="flex justify-between items-center text-[12px] mb-5 ">
-                        <p className="flex items-center justify-center gap-1">
-                          <FaCarSide />
-                          {cur.car_type}
-                        </p>
-                        <p className="flex justify-between items-center gap-1">
-                          <>
-                            <button
-                              className="bg-green-500 rounded-sm text-black px-6 py-2"
-                              onClick={() => {
-                                showVarients(cur.model);
-                              }}
-                            >
-                              Select
-                            </button>
-                          </>
-                        </p>
+                      
+                      <div className="d-flex justify-content-between align-items-center mb-3 text-secondary small">
+                        <span className="d-flex align-items-center gap-2">
+                          <FaCarSide /> {cur.car_type}
+                        </span>
+                         <button
+                           className="btn btn-success btn-sm px-4"
+                           onClick={() => {
+                             showVarients(cur.model);
+                           }}
+                         >
+                           Select
+                         </button>
                       </div>
                     </div>
                   </div>
@@ -129,7 +111,7 @@ const AvailableVehiclesAfterSearch = () => {
               )
           )}
       </div>
-      {!availableCars || (availableCars.length == 0 && <CarNotFound />)}
+      {(!availableCars || availableCars.length === 0) && <CarNotFound />}
     </div>
   );
 };

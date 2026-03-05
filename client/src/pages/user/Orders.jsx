@@ -19,24 +19,26 @@ export default function Orders() {
   const dispatch = useDispatch();
 
   const fetchBookings = async () => {
-    try {
-      const res = await fetch("/api/user/findBookingsOfUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    // MOCK DATA
+    const mockBookings = [
+      {
+        _id: "65ab123",
+        vehicleDetails: {
+          name: "Hyundai Creta",
+          image: ["https://imgd.aeplcdn.com/370x208/n/cw/ec/141115/creta-exterior-right-front-three-quarter.jpeg?isig=0&q=80"],
         },
-        body: JSON.stringify({
-          userId: _id,
-        }),
-      });
-
-      const data = await res.json();
-      if (data) {
-        setBookings(data);
+        bookingDetails: {
+          _id: "ORD-9876",
+          totalPrice: 120,
+          pickUpLocation: "Downtown Hub",
+          dropOffLocation: "Airport Terminal 1",
+          pickupDate: new Date().toISOString(),
+          dropOffDate: new Date(new Date().getTime() + 86400000).toISOString()
+        }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    ];
+
+    setBookings(mockBookings);
   };
 
   useEffect(() => {
@@ -49,13 +51,13 @@ export default function Orders() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-20">
+    <div className="container py-5" style={{ maxWidth: '900px' }}>
       <UserOrderDetailsModal />
-      <h1 className="text-4xl font-semibold mb-2">Your Bookings</h1>
-      <div className="text-sm text-gray-600 mb-8">
-        {bookings && bookings.length > 0 ? "Check out all of your Bookings" :  <div className="font-extrabold text-black flex justify-center items-center min-h-[500px]">No Bookings Yet</div>}
+      <h1 className="display-5 fw-semibold mb-2">Your Bookings</h1>
+      <div className="small text-muted mb-4">
+        {bookings && bookings.length > 0 ? "Check out all of your Bookings" :  <div className="fw-bold text-dark d-flex justify-content-center align-items-center" style={{ minHeight: '500px' }}>No Bookings Yet</div>}
       </div>
-      <div className="mb-8">
+      <div className="mb-5">
         {bookings && bookings.length > 0
           && bookings.map((cur, idx) => {
               const pickupDate = new Date(cur.bookingDetails.pickupDate);
@@ -63,109 +65,84 @@ export default function Orders() {
 
               return (
                 <div
-                  className="box-shadow-md drop-shadow-md border border-1px rounded-lg p-4 md:px-10 md:py-5 mb-4"
+                  className="card shadow-sm mb-4 border"
                   key={idx}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-6 ">
-                    <div className="mb-4">
+                  <div className="row g-0 p-3 p-md-4">
+                    <div className="col-12 col-md-4 mb-3 mb-md-0 d-flex align-items-center justify-content-center bg-light rounded">
                     <img
                       alt={cur.vehicleDetails.name}
-                      className="w-full h-auto bg-gray-100  "
+                      className="img-fluid"
                       height="200"
                       src={cur.vehicleDetails.image[0]}
                       style={{
-                        aspectRatio: "200/200",
                         objectFit: "contain",
+                        maxHeight: '200px'
                       }}
                       width="200"
                     />
                     </div>
                     
-                    <div className="col-span-2">
-                      <h3 className="text-lg font-semibold mb-1">{cur._id}</h3>
-                      <p className="text-gray-600 mb-2">
-                        <span className="font-bold">Id</span> :{" "}
+                    <div className="col-12 col-md-8 ps-md-4">
+                      <h3 className="h5 fw-semibold mb-1">{cur._id}</h3>
+                      <p className="text-muted mb-2">
+                        <span className="fw-bold">Id</span> :{" "}
                         {cur.bookingDetails._id}
                       </p>
-                      <p className="text-lg font-semibold mb-4 flex  items-center">
-                        <span>
-                          <MdCurrencyRupee />
-                        </span>
+                      <p className="h5 fw-semibold mb-4 d-flex align-items-center">
+                        <MdCurrencyRupee />
                         {cur.bookingDetails.totalPrice}
                       </p>
-                      <div className="flex justify-between">
-                        <div className="">
-                          <div className="mt-2 font-medium underline underline-offset-4 mb-5">
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <div className="mt-2 fw-medium text-decoration-underline mb-3">
                             Pick up
                           </div>
-                          <div className="mt-2 capitalize">
-                            <p className="text-black text-sm mt-2 leading-6 flex items-center gap-2">
-                              <span>
-                                <CiLocationOn />
-                              </span>
+                          <div className="mt-2 text-capitalize">
+                            <p className="text-dark small mt-2 d-flex align-items-center gap-2">
+                              <CiLocationOn />
                               {cur.bookingDetails.pickUpLocation}
                             </p>
 
-                            <div className="text-[14px] flex flex-col justify-start items-start  pr-2 gap-2 mt-2">
-                              <div className="flex justify-between gap-2 items-center">
-                                <span>
-                                  <CiCalendarDate style={{ fontSize: 15 }} />
-                                </span>
-                                {
-                                  <>
-                                    <span> {pickupDate.getDate()}: </span>
-                                    <span>{pickupDate.getMonth()} : </span>
-                                    <span>{pickupDate.getFullYear()} </span>
-                                  </>
-                                }
+                            <div className="small d-flex flex-column gap-2 mt-2">
+                              <div className="d-flex gap-2 align-items-center">
+                                <CiCalendarDate style={{ fontSize: 15 }} />
+                                <span> {pickupDate.getDate()}: {pickupDate.getMonth() + 1}: {pickupDate.getFullYear()} </span>
                               </div>
-                              <div className="flex justify-center items-center gap-2">
-                                <span>
-                                  <IoMdTime style={{ fontSize: 16 }} />
-                                </span>
-                                <span></span>
-                                {pickupDate.getHours()}:
-                                <span>{pickupDate.getMinutes()}</span>
+                              <div className="d-flex align-items-center gap-2">
+                                <IoMdTime style={{ fontSize: 16 }} />
+                                <span>{pickupDate.getHours()}:{pickupDate.getMinutes()}</span>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div className="">
-                          <div className="mt-2 font-medium underline underline-offset-4 mb-5">
+                        <div>
+                          <div className="mt-2 fw-medium text-decoration-underline mb-3">
                             Drop off
                           </div>
 
-                          <div className="mt-2">
-                            <p className="text-black text-sm leading-6 mt-2 capitalize flex items-center gap-2">
-                              <span>
-                                <CiLocationOn />
-                              </span>
+                          <div className="mt-2 text-capitalize">
+                            <p className="text-dark small mt-2 d-flex align-items-center gap-2">
+                              <CiLocationOn />
                               {cur.bookingDetails.dropOffLocation}
                             </p>
 
-                            <div className="text-[14px] flex flex-col justify-start items-start pr-2 gap-2 mt-2">
-                              <div className="flex  justify-between gap-2 items-center">
-                                <span>
-                                  <CiCalendarDate style={{ fontSize: 15 }} />
-                                </span>
-                                <span>{dropoffDate.getDate()} : </span>
-                                <span>{dropoffDate.getMonth()} : </span>
-                                <span>{dropoffDate.getFullYear()} </span>
+                            <div className="small d-flex flex-column gap-2 mt-2">
+                              <div className="d-flex gap-2 align-items-center">
+                                <CiCalendarDate style={{ fontSize: 15 }} />
+                                <span>{dropoffDate.getDate()}: {dropoffDate.getMonth() + 1}: {dropoffDate.getFullYear()} </span>
                               </div>
-                              <div className="flex justify-center items-center gap-2">
-                                <span>
-                                  <IoMdTime style={{ fontSize: 16 }} />
-                                </span>
-                                <span>{dropoffDate.getHours()} </span>:
-                                <span>{dropoffDate.getMinutes()} </span>
+                              <div className="d-flex align-items-center gap-2">
+                                <IoMdTime style={{ fontSize: 16 }} />
+                                <span>{dropoffDate.getHours()}:{dropoffDate.getMinutes()} </span>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="flex mt-4">
+                      <div className="mt-4">
                         <button
-                          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+                          className="btn btn-dark btn-sm px-4 py-2"
                           onClick={() => handleDetailsModal(cur)}
                         >
                           Details

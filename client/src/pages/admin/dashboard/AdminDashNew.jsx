@@ -18,29 +18,35 @@ function AdminDashNew() {
   const { activeMenu } = useSelector((state) => state.adminDashboardSlice);
 
   return (
-    <div>
-      <div className="flex relative dark:bg-main-dark-bg">
+    <div className="container-fluid p-0">
+      <div className="d-flex position-relative bg-light">
       
-        {activeMenu ? (
-          <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg">
-            <SideBar />
-          </div>
-        ) : (
-          <div className="w-0 dark:bg-secondary-dark-bg">
-            <SideBar />
-          </div>
-        )}
-
-        <div
-          className={`dark:bg-white bg-white min-h-screen w-full ${
-            activeMenu ? "ml-72 md:ml-72" : "flex-2"
-          } `}
+        {/* Sidebar */}
+        <div 
+          className="bg-white position-fixed h-100 shadow-sm z-3" 
+          style={{ 
+            width: activeMenu ? "250px" : "0px",
+            overflow: "hidden",
+            transition: "all 0.3s" 
+          }}
         >
-          <div className={`fixed md:static bg-white  w-full   `}>
+          <SideBar />
+        </div>
+
+        {/* Main Content Area */}
+        <div
+          className="flex-grow-1 bg-white min-vh-100"
+          style={{ 
+            marginLeft: activeMenu ? "250px" : "0px",
+            transition: "margin-left 0.3s",
+            width: activeMenu ? "calc(100% - 250px)" : "100%"
+          }}
+        >
+          <div className="w-100 position-sticky top-0 z-2 bg-white">
             <Navbar />
           </div>
 
-          <div className="main_section mx-8  ">
+          <div className="p-4 w-100" style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
             <Routes>
               <Route path="/" element={<AdminHomeMain/>}/>
               <Route path="/adminHome" element={<AdminHomeMain />} />
@@ -53,7 +59,6 @@ function AdminDashNew() {
               <Route path="/editor" element={<Editor />} />
               <Route path="/vendorVehicleRequests" element={<VenderVehicleRequests />} />
               <Route path="/orders" element={<Bookings />} />
-
             </Routes>
           </div>
         </div>

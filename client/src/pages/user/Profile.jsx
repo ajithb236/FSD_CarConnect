@@ -17,28 +17,28 @@ function Profile() {
 
   return (
     <div>
-      <div className="text-red-500">{isError ? isError.message : " "}</div>
-      <div className="fixed top-4 right-5 md:right-10 z-10">
+      <div className="text-danger">{isError ? isError.message : " "}</div>
+      <div className="position-fixed top-0 end-0 p-3 z-3">
         <TooltipComponent content={"back"} position="BottomCenter">
-          <Link to={"/"}>
+          <Link to={"/"} className="text-dark text-decoration-none">
             <IoArrowBackCircleSharp
-              style={{ fontSize: "40", hover: "fill-red-700" }}
-              className="hover:fill-blue-500"
+              style={{ fontSize: "40px" }}
+              className="text-primary-hover"
             />
           </Link>
         </TooltipComponent>
       </div>
 
-      <div>
-        <div className="flex  relative dark:bg-main-dark-bg">
-         
-
+      <div className="container-fluid p-0">
+        <div className="d-flex position-relative">
+          
+          {/* Sidebar */}
           {activeMenu ? (
-            <div className="w-72 bg-white  fixed sidebar dark:bg-secondary-dark-bg">
+            <div className="bg-white position-fixed h-100 shadow-sm z-3" style={{ width: "280px", transition: "all 0.3s" }}>
               <UserProfileSidebar />
             </div>
           ) : (
-            <div className="w-0 dark:bg-secondary-dark-bg">
+            <div className="position-fixed h-100 z-3" style={{ width: "0px", overflow: "hidden", transition: "all 0.3s" }}>
               <UserProfileSidebar />
             </div>
           )}
@@ -47,28 +47,30 @@ function Profile() {
           {!activeMenu && (
             <TooltipComponent
               content={"menu"}
-              className="absolute md:relative"
               position="BottomCenter"
             >
               <button
-                className="text-xl rounded-full p-3 mt-4 block  hover:bg-gray-500"
+                className="btn btn-light rounded-circle p-2 m-3 position-absolute z-2"
                 onClick={() => {
                   dispatch(showSidebarOrNot(true));
                 }}
               >
-                <IoMenu />
+                <IoMenu className="fs-4" />
               </button>
             </TooltipComponent>
           )}
 
+          {/* Main Content Area */}
           <div
-            className={`bg-white  min-h-screen w-full  mt-[10px] max-w-[800px] mx-auto ${
-              activeMenu ? "sm:ml-72 " : " max-w-[900px]"
-            } `}
+            className="flex-grow-1 bg-white min-vh-100 mx-auto transition-all"
+            style={{ 
+              marginLeft: activeMenu ? "280px" : "0", 
+              transition: "margin-left 0.3s",
+              maxWidth: "1000px",
+              padding: "20px"
+            }}
           >
-            <div className={`fixed md:static bg-white  w-full   `}></div>
-
-            <div className="main_section mx-8 lg:min-w-[900px] ">
+            <div className="w-100">
               <Routes>
                 <Route path="/" element={<UserProfileContent />} />
                 <Route path="/profiles" element={<UserProfileContent />} />

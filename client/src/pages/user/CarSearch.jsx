@@ -164,27 +164,24 @@ const CarSearch = () => {
 
   return (
     <>
-      <section id="booking-section" className="book-section relative z-10 mt-[50px]  mx-auto max-w-[1500px] bg-white">
+      <section id="booking-section" className="position-relative z-1 mt-5 mx-auto bg-white" style={{ maxWidth: '1500px' }}>
         {/* overlay */}
 
-        <div className="container bg-white">
-          <div className="book-content   ">
-            <div className="book-content__box ">
-              <h2>Book a car</h2>
+        <div className="container bg-white shadow-sm p-4 rounded mt-4 mb-5 border">
+          <div className="book-content">
+            <div className="book-content__box">
+              <h2 className="mb-4 fw-bold">Book a car</h2>
 
-              <p className="error-message">
+              <p className="d-none text-danger fw-bold align-items-center gap-1 mb-3">
                 All fields required! <IconX width={20} height={20} />
               </p>
 
-              <p className="booking-done">
-                Check your email to confirm an order. <IconX width={20} height={20} />
-              </p>
-
               <form onSubmit={handleSubmit(hanldeData)}>
-                <div className="box-form">
-                  <div className="box-form__car-type">
-                    <label htmlFor="pickup_district">
-                      <IconMapPinFilled className="input-icon" /> &nbsp; Pick-up District <p className="text-red-500">*</p>
+                <div className="row g-4">
+                  <div className="col-md-4">
+                    <label htmlFor="pickup_district" className="form-label fw-semibold">
+                      <IconMapPinFilled className="text-warning mb-1" /> &nbsp; Pick-up District{" "}
+                      <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="pickup_district"
@@ -193,7 +190,7 @@ const CarSearch = () => {
                         <TextField
                           {...field}
                           id="pickup_district"
-                          className="p-2 capitalize"
+                          className="w-100 text-capitalize"
                           select
                           // required
                           error={Boolean(errors.pickup_district)}
@@ -204,7 +201,7 @@ const CarSearch = () => {
                         >
                           {isLoading == true && (
                             <MenuItem value="">
-                              <span className="animate-pulse">Loading</span> <span className="animate-pulse">...</span>
+                              <span>Loading</span> <span>...</span>
                             </MenuItem>
                           )}
                           {!isLoading && <MenuItem value="">Select a Place</MenuItem>}
@@ -216,12 +213,13 @@ const CarSearch = () => {
                         </TextField>
                       )}
                     />
-                    {errors.pickup_district && <p className="text-red-500">{errors.pickup_district.message}</p>}
+                    {errors.pickup_district && <p className="text-danger small mt-1">{errors.pickup_district.message}</p>}
                   </div>
 
-                  <div className="box-form__car-type ">
-                    <label htmlFor="pickup_location">
-                      <IconMapPinFilled className="input-icon" /> &nbsp; Pick-up Location <p className="text-red-500">*</p>
+                  <div className="col-md-4">
+                    <label htmlFor="pickup_location" className="form-label fw-semibold">
+                      <IconMapPinFilled className="text-warning mb-1" /> &nbsp; Pick-up Location{" "}
+                      <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="pickup_location"
@@ -232,14 +230,14 @@ const CarSearch = () => {
                           id="pickup_location"
                           select
                           // required
-                          className="md:mb-10 capitalize"
+                          className="w-100 text-capitalize"
                           placeholder={"pick up location"}
                           onChange={(e) => field.onChange(e.target.value)}
                           error={Boolean(errors.pickup_location)}
                         >
                           {isLoading && (
                             <MenuItem value="">
-                              <span className="animate-pulse">Loading</span> <span className="animate-pulse">...</span>
+                              <span>Loading</span> <span>...</span>
                             </MenuItem>
                           )}
                           {!isLoading && <MenuItem value="">Select a specific location</MenuItem>}
@@ -253,12 +251,13 @@ const CarSearch = () => {
                         </TextField>
                       )}
                     />
-                    {errors.pickup_location && <p className="text-red-500">{errors.pickup_location.message}</p>}
+                    {errors.pickup_location && <p className="text-danger small mt-1">{errors.pickup_location.message}</p>}
                   </div>
 
-                  <div className="box-form__car-type">
-                    <label>
-                      <IconMapPinFilled className="input-icon" /> &nbsp; Drop-of Location <p className="text-red-500">*</p>
+                  <div className="col-md-4">
+                    <label className="form-label fw-semibold">
+                      <IconMapPinFilled className="text-warning mb-1" /> &nbsp; Drop-of Location{" "}
+                      <span className="text-danger">*</span>
                     </label>
 
                     <Controller
@@ -271,16 +270,16 @@ const CarSearch = () => {
                           // required
                           error={Boolean(errors.dropoff_location)}
                           id="dropoff_location"
-                          className="md:mb-10 capitalize"
+                          className="w-100 text-capitalize"
                           placeholder={"pick up location"}
                           onChange={(e) => field.onChange(e.target.value)}
                         >
                           {isLoading && (
                             <MenuItem value="">
-                              <span className="animate-pulse">Loading</span> <span className="animate-pulse">...</span>
+                              <span>Loading</span> <span>...</span>
                             </MenuItem>
                           )}
-                          {isLoading && <MenuItem value="">Select a specific location</MenuItem>}
+                          {!isLoading && <MenuItem value="">Select a specific location</MenuItem>}
                           {/* conditionaly rendering options based on district selected or not */}
                           {locationsOfDistrict &&
                             locationsOfDistrict.map((availableLocations, idx) => (
@@ -291,21 +290,23 @@ const CarSearch = () => {
                         </TextField>
                       )}
                     />
-                    {errors.dropoff_location && <p className="text-red-500">{errors.dropoff_location.message}</p>}
+                    {errors.dropoff_location && <p className="text-danger small mt-1">{errors.dropoff_location.message}</p>}
                   </div>
 
-                  <div className="box-form__car-time">
-                    <label htmlFor="picktime" className="flex items-center">
-                      <IconCalendarEvent className="input-icon" /> &nbsp; Pick-up Date <p className="text-red-500">*</p>
+                  <div className="col-md-4 mt-4">
+                    <label htmlFor="picktime" className="form-label fw-semibold d-flex align-items-center">
+                      <IconCalendarEvent className="text-warning me-2" /> Pick-up Date{" "}
+                      <span className="text-danger ms-1">*</span>
                     </label>
                     <Controller
                       name={"pickuptime"}
                       control={control}
                       render={({ field }) => (
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DemoContainer components={["DateTimePicker"]}>
+                          <DemoContainer components={["DateTimePicker"]} sx={{ pt: 0 }}>
                             <DateTimePicker
                               label="Pickup time"
+                              className="w-100"
                               {...field}
                               value={field.value}
                               minDate={dayjs()}
@@ -318,31 +319,34 @@ const CarSearch = () => {
                         </LocalizationProvider>
                       )}
                     />
-                    {errors.pickuptime && <p className="text-red-500">{errors.pickuptime.message}</p>}
+                    {errors.pickuptime && <p className="text-danger small mt-1">{errors.pickuptime.message}</p>}
                   </div>
 
-                  <div className="box-form__car-time">
-                    <label htmlFor="droptime" className="flex items-center">
-                      <IconCalendarEvent className="input-icon" /> &nbsp; Drop-of Date <p className="text-red-500">*</p>
+                  <div className="col-md-4 mt-4">
+                    <label htmlFor="droptime" className="form-label fw-semibold d-flex align-items-center">
+                      <IconCalendarEvent className="text-warning me-2" /> Drop-of Date{" "}
+                      <span className="text-danger ms-1">*</span>
                     </label>
                     <Controller
                       name={"dropofftime"}
                       control={control}
                       render={({ field }) => (
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DemoContainer components={["DateTimePicker"]}>
-                            <DateTimePicker label="Dropoff time" {...field} value={field.value} minDate={pickup ? oneDayGap : dayjs()} />
+                          <DemoContainer components={["DateTimePicker"]} sx={{ pt: 0 }}>
+                            <DateTimePicker className="w-100" label="Dropoff time" {...field} value={field.value} minDate={pickup ? oneDayGap : dayjs()} />
                           </DemoContainer>
                         </LocalizationProvider>
                       )}
                     />
-                    {errors.dropofftime && <p className="text-red-500">{errors.dropofftime.message}</p>}
-                    {error && <p className="text-[8px] text-red-500">{error}</p>}
+                    {errors.dropofftime && <p className="text-danger small mt-1">{errors.dropofftime.message}</p>}
+                    {error && <p className="text-danger small mt-1">{error}</p>}
                   </div>
 
-                  <button type="submit" className="book-content__box_button">
-                    Search
-                  </button>
+                  <div className="col-md-4 mt-4 d-flex align-items-end mb-2">
+                    <button type="submit" className="btn btn-success btn-lg w-100 fw-bold shadow-sm">
+                      Search
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

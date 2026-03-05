@@ -11,7 +11,6 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { displayRazorpay } from "./Razorpay";
 import { setPageLoading } from "../../redux/user/userSlice";
 import { setisPaymentDone } from "../../redux/user/LatestBookingsSlice";
 import {toast, Toaster} from "sonner";
@@ -23,22 +22,12 @@ export async function sendBookingDetailsEmail(
   dispatch
 ) {
   try {
-    const sendEamil = await fetch("/api/user/sendBookingDetailsEamil", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ toEmail, data: bookingDetails }),
+    // Mocking email sending to avoid backend calls
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("good");
+      }, 500);
     });
-    const response = await sendEamil.json();
-
-    if (!response.ok) {
-      dispatch(setisPaymentDone(false));
-      console.log("something went wrong while sending email");
-      return;
-    }
-
-    return "good";
   } catch (error) {
     console.log(error);
   }
@@ -139,21 +128,18 @@ const CheckoutPage = () => {
 
     try {
       dispatch(setPageLoading(true));
-      const displayRazorpayResponse = await displayRazorpay(
-        orderData,
-        navigate,
-        dispatch
-      );
-
-      if (!displayRazorpayResponse || !displayRazorpayResponse?.ok) {
+      
+      // Mock successful payment and booking
+      setTimeout(() => {
+        toast.success("Payment Successful! Booking Confirmed.");
+        dispatch(setisPaymentDone(true));
+        navigate("/orders");
         dispatch(setPageLoading(false));
-        toast.error(displayRazorpayResponse?.message);
-      }
+      }, 1000);
+
     } catch (error) {
       console.log(error);
       dispatch(setPageLoading(false));
-    }finally{
-      dispatch(setPageLoading(false))
     }
   };
 

@@ -31,120 +31,99 @@ const AllVehiclesofSameModel = () => {
   return (
     <>
       <Header />
-      <div className=" lg:grid lg:grid-cols-12 gap-x-10 mx-28 justify-between">
-        <div className=" mt-10 col-span-3   relative box-shadow-xl drop-shadow-xl ">
-          <Filter />
-        </div>
-        <div className="col-span-9">
-          <div className="mt-10  bg-blend-overlay  backdrop-blur-xl opacity-1 box-shadow-xl  top-5 z-40 drop-shadow-lg ">
-            <Sort />
+      <div className="container mt-4">
+        <div className="row g-4">
+          <div className="col-12 col-lg-3">
+            <Filter />
           </div>
+          <div className="col-12 col-lg-9">
+            <div className="mb-4 position-relative z-3">
+              <Sort />
+            </div>
 
-          {filterdData && filterdData.length > 0 ? (
-          <div
-            className=" mx-auto flex sm:flex-row  w-full  lg:grid lg:max-w-[1000px]  lg:grid-cols-3 justify-center items-center gap-5 
-    flex-wrap mt-10"
-          >
-            
-              {filterdData.map(
-                (cur, idx) =>
-                  cur.isDeleted === "false" && (
-                    <div
-                      className="bg-white box-shadow rounded-lg  drop-shadow "
-                      key={idx}
-                    >
-                      <div className="mx-auto max-w-[320px] px-4 py-2 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
-                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden object-contain rounded-md bg-white lg:aspect-none group-hover:opacity-75 lg:h-80 mb-3">
+            {filterdData && filterdData.length > 0 ? (
+              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {filterdData.map(
+                  (cur, idx) =>
+                    cur.isDeleted === "false" && (
+                      <div className="col" key={idx}>
+                        <div className="card h-100 shadow-sm border-0">
                           <img
                             src={`${cur.image[0]}`}
-                            alt={`cur.name`}
-                            className=" w-full object-contain object-center lg:h-full lg:w-full"
+                            className="card-img-top object-fit-contain p-3"
+                            alt={cur.name}
+                            style={{ height: '200px' }}
                           />
-                        </div>
-                        <div className="flex justify-between items-start">
-                          <h2 className="text-[14px] capitalize font-semibold tracking-tight text-gray-900">
-                            <span></span>
-                            {cur.name}
-                          </h2>
+                          <div className="card-body d-flex flex-column">
+                            <div className="d-flex justify-content-between align-items-start mb-3">
+                              <h5 className="card-title text-capitalize mb-0 fs-6 fw-bold">
+                                {cur.name}
+                              </h5>
+                              <div className="text-end">
+                                <p className="fw-bold mb-0">${cur.price}</p>
+                                <small className="text-muted" style={{ fontSize: "10px" }}>Per Day</small>
+                              </div>
+                            </div>
 
-                          <div className="text-[14px]  flex flex-col items-end">
-                            <p className="font-semibold">{cur.price}</p>
-                            <div className="text-[6px] relative bottom-[3px]">
-                              Per Day
+                            <div className="d-flex justify-content-between align-items-center mb-3 text-secondary small">
+                              <span className="d-flex align-items-center gap-2">
+                                <FaCarSide /> {cur.company}
+                              </span>
+                              <span className="d-flex align-items-center gap-2">
+                                <MdAirlineSeatReclineNormal /> {cur.seats} Seats
+                              </span>
+                            </div>
+                            
+                            <div className="d-flex justify-content-between align-items-center mb-3 text-secondary small">
+                              <span className="d-flex align-items-center gap-2">
+                                <FaCarSide /> {cur.car_type}
+                              </span>
+                              <span className="d-flex align-items-center gap-2">
+                                <BsFillFuelPumpFill /> {cur.fuel_type}
+                              </span>
+                            </div>
+
+                            <hr className="my-2" />
+
+                            <div className="d-flex justify-content-center gap-2 mt-auto pt-2">
+                              <button
+                                className="btn btn-success btn-sm px-3 flex-grow-1"
+                                onClick={() =>
+                                  onVehicleDetail(cur._id, dispatch, navigate)
+                                }
+                              >
+                                Book Ride
+                              </button>
+
+                              <button
+                                className="btn btn-dark btn-sm px-3 flex-grow-1"
+                                onClick={() =>
+                                  onVehicleDetail(cur._id, dispatch, navigate)
+                                }
+                              >
+                                Details
+                              </button>
                             </div>
                           </div>
                         </div>
-
-                        <div className="my-2 font-mono">
-                          <div className="flex justify-between items-center mb-5 mt-5">
-                            <h3 className="text-[12px] flex justify-between items-center gap-1 ">
-                              <span>
-                                <FaCarSide />
-                              </span>
-                              {cur.company}
-                            </h3>
-                            <p className=" text-end text-[12px] flex justify-between items-center gap-1">
-                              <span>
-                                <MdAirlineSeatReclineNormal />
-                              </span>
-                              {cur.seats}
-                            </p>
-                          </div>
-                          <div className="flex justify-between items-center text-[12px] mb-5 ">
-                            <p className="flex items-center justify-center gap-1">
-                              <FaCarSide />
-                              {cur.car_type}
-                            </p>
-                            <p className="flex justify-between items-center gap-1">
-                              <span>
-                                <BsFillFuelPumpFill />
-                              </span>
-                              {cur.fuel_type}
-                            </p>
-                          </div>
-
-                          <hr />
-
-                          <div className="flex justify-center items-center gap-x-5  my-3">
-                            <button
-                              className="bg-green-500 px-4 py-2 w-[100px] rounded-sm"
-                              onClick={() =>
-                                onVehicleDetail(cur._id, dispatch, navigate)
-                              }
-                            >
-                              <div className="text-[12px] ">Book Ride</div>
-                            </button>
-
-                            <button
-                              className="bg-black px-4 py-2 w-[100px] rounded-sm"
-                              onClick={() =>
-                                onVehicleDetail(cur._id, dispatch, navigate)
-                              }
-                            >
-                              <div className="text-[12px] text-white">
-                                Details
-                              </div>
-                            </button>
-                          </div>
-                        </div>
                       </div>
-                    </div>
-                  )
-              )}
+                    )
+                )}
               </div>
-            ) 
-            : (
-              <div className="max-w-[400px] flex flex-col justify-center gap-y-4 items-center mx-auto mt-10">
+            ) : (
+              <div className="text-center mt-5">
                 <img
                   src="https://d310a92p0we78s.cloudfront.net/illustration/premium/additional-file/2829991/1.svg?token=eyJhbGciOiJoczI1NiIsImtpZCI6ImRlZmF1bHQifQ__.eyJpc3MiOiJkMzEwYTkycDB3ZTc4cy5jbG91ZGZyb250Lm5ldCIsImV4cCI6MTcxNTY4Nzk0MiwicSI6bnVsbCwiaWF0IjoxNzE1NDI4NzQyfQ__.d4e4b015139247a901a11eeb00ef35e524acf56eaf251e07c1c468a9ebdf089e"
-                  alt=""
+                  alt="No car found"
+                  style={{ maxWidth: '300px' }}
+                  className="img-fluid mb-4"
                 />
-                <p className="text-md font-bold">No car found </p>
+                <h4 className="fw-bold">No car found</h4>
               </div>
             )}
-          
 
-          {!allVariants || (allVariants.length == 0 && <CarNotFound />)}
+            {!allVariants || (allVariants.length === 0 && <CarNotFound />)}
+          </div>
         </div>
       </div>
     </>

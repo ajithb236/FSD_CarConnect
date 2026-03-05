@@ -43,9 +43,9 @@ const Sort = () => {
   },[])
 
   return (
-    <div className=" drop-shadow-lg">
+    <div className="shadow-sm p-2 mb-3 bg-white rounded">
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center justify-center gap-1 md:gap-3 md:justify-start mx-auto md:mx-[80px] lg:mx-0">
+        <div className="d-flex align-items-center justify-content-center justify-content-md-start gap-2 gap-md-3 mx-auto mx-md-4 mx-lg-0">
   
             <Controller
               control={control}
@@ -57,14 +57,15 @@ const Sort = () => {
                   select
                   label="Price"
                   // error={Boolean(field.value == "")}
-                  sx={{ m: 1, width: 150 ,borderRadius:"400px"}}
+                  sx={{ width: 150 }}
+                  size="small"
                   
                   onChange={(event) => {
                     field.onChange(event); // Trigger react-hook-form's onChange function
                     handleInputChange(event.target.value); // Custom function to handle select change
                   }}
                 >
-                  <MenuItem className="bg-gray-100">None</MenuItem>
+                  <MenuItem className="bg-light">None</MenuItem>
                   <MenuItem value={"lowtohigh"}>Low to High</MenuItem>
 
                   <MenuItem value={"hightolow"}>High to Low</MenuItem>
@@ -82,13 +83,14 @@ const Sort = () => {
                   select
                   label="Year"
                   // error={Boolean(field.value == "")}
-                  sx={{ m: 1, width: 150 }}
+                  sx={{ width: 150 }}
+                  size="small"
                   onChange={(event) => {
                     field.onChange(event); // Trigger react-hook-form's onChange function
                     handleInputChange(event.target.value); // Custom function to handle select change
                   }}
                 >
-                  <MenuItem className="bg-gray-100" >None</MenuItem>
+                  <MenuItem className="bg-light" >None</MenuItem>
                   <MenuItem value={"yearAscending"}>low to high</MenuItem>
 
                   <MenuItem value={"yearDecending"}>high to low</MenuItem>

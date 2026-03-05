@@ -19,39 +19,42 @@ const UserProfileContent = () => {
   }, [isUpdated, dispatch]);
 
   return (
-    <div className="px-4 mx-auto mt-12  bg-white w-full sm:px-6 lg:px-8">
+    <div className="container px-3 px-md-4 mt-5 bg-white w-100">
       <Toaster />
-      <div className="bg-white md:mx-auto rounded shadow-xl w-full  overflow-hidden">
-        <div className="h-[140px] bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-        <div className="px-5 py-2 flex flex-col gap-3 pb-6">
-          <div className="h-[90px] relative shadow-md w-[90px] rounded-full border-4  -mt-14 border-white">
+      <div className="card shadow-sm w-100 overflow-hidden border-0">
+        <div 
+          className="bg-primary bg-gradient" 
+          style={{ height: '140px' }}
+        ></div>
+        <div className="card-body px-4 py-3 d-flex flex-column gap-3 pb-4">
+          <div className="position-relative shadow-sm rounded-circle border border-white border-4" style={{ width: '90px', height: '90px', marginTop: '-60px' }}>
             <img
               src={profilePicture}
               alt="profile_picture"
-              className="w-full h-full rounded-full object-center object-cover"
+              className="w-100 h-100 rounded-circle w-100 h-100 object-fit-cover"
             />
-            <div className="absolute bottom-0 left-[60px] z-10 ">
-              <div type="button" className=" p-3">
+            <div className="position-absolute bottom-0 start-100 translate-middle-x z-3">
+              <div type="button" className="p-1">
                 <ProfileEdit />
               </div>
             </div>
           </div>
-          <div className="">
-            <h3 className="text-xl text-slate-900 relative font-bold leading-6">
+          <div>
+            <h3 className="h4 text-dark position-relative fw-bold lh-sm mb-1 mt-2">
               {username}
             </h3>
-            <p className="text-sm text-gray-600">{email}</p>
+            <p className="small text-muted">{email}</p>
           </div>
           <div>
-            <h4 className="text-sm font-medium leading-1 mb-2">
+            <h4 className="small fw-medium mb-2 mt-3">
               User Informations
             </h4>
-            <div className="flex flex-col gap-y-2">
-              <p className="text-sm text-gray-600">
-                Phone:{(phoneNumber && phoneNumber) || ""}
+            <div className="d-flex flex-column gap-2">
+              <p className="small text-muted mb-0">
+                Phone: {(phoneNumber && phoneNumber) || ""}
               </p>
-              <p className="text-sm text-gray-600 max-w-[150px]">
-                Adress:{(adress && adress) || ""}
+              <p className="small text-muted mb-0" style={{ maxWidth: '250px' }}>
+                Address: {(adress && adress) || ""}
               </p>
             </div>
           </div>

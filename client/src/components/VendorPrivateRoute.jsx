@@ -3,8 +3,9 @@ import { Navigate, Outlet } from "react-router-dom";
 
 function VendorPrivateRoute() {
   const currentUser = useSelector((state) => state.user.currentUser);
+  const userRole = localStorage.getItem("userRole");
 
-  return currentUser && currentUser.isVendor ? (
+  return (userRole === "vendor" || (currentUser && currentUser.isVendor)) ? (
     <Outlet />
   ) : (
     <Navigate to={"/vendorSignin"} />

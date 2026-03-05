@@ -26,7 +26,6 @@ import AvailableVehicles from "./pages/user/AvailableVehiclesAfterSearch";
 import VendorEditProductComponent from "./pages/vendor/Components/VendorEditProductComponent";
 import VendorDeleteVehicleModal from "./pages/vendor/Components/VendorDeleteVehicleModal";
 import CheckoutPage from "./pages/user/CheckoutPage";
-import Razorpay from "./pages/user/Razorpay";
 import AllVehiclesofSameModel from "./pages/user/AllVehiclesofSameModel";
 import AddProductModal from "./pages/admin/components/AddProductModal";
 import VendorAddProductModal from "./pages/vendor/Components/VendorAddVehilceModal";
@@ -67,7 +66,6 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/availableVehicles" element={<AvailableVehicles />} />
             <Route path="/checkoutPage" element={<CheckoutPage />} />
-            <Route path="/razorpay" element={<Razorpay />} />
           </Route>
 
           {/* vendor private routes */}

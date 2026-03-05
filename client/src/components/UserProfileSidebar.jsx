@@ -27,50 +27,31 @@ const UserProfileSidebar = () => {
   const dispatch = useDispatch();
 
   const activeLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-black bg-blue-50 text-md  m-2";
-  //in normal mode there was dark:text-gray-200 i removed it
+    "d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-dark bg-primary bg-opacity-10 text-decoration-none mb-2";
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-md text-gray-700   dark:hover:text-black hover:bg-slate-100 m-2";
+    "d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-secondary text-decoration-none mb-2 hover-bg-light";
 
   //SignOut
   const handleSignout = async () => {
-    const res = await fetch("/api/admin/signout", {
-      method: "GET",
-      credentials:'include'
-    });
-    const data = await res.json();
-    if (data) {
+    // MOCK THIS
       dispatch(signOut());
       navigate("/signin");
-    }
+      localStorage.removeItem("userRole");
   };
 
   const handleDelete = async () => {
-    try {
-      dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.succes === false) {
-        dispatch(deleteUserFailure(data));
-        return;
-      }
-      dispatch(deleteUserSuccess(data));
-    } catch (error) {
-      dispatch(deleteUserFailure(error));
-    }
+    // MOCK THIS
+      dispatch(deleteUserSuccess({message: "Delete successful"}));
   };
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="vh-100 overflow-auto pb-5 px-3 bg-white border-end">
       {activeMenu && (
         <>
-          <div className="flex justify-between items-center">
+          <div className="d-flex justify-content-between align-items-center pt-3">
             <Link
               to={`/`}
-              onClick={() => {}}
-              className="items-center flex gap-3 mt-4 ml-3 text-xl font-extrabold text-black tracking-tight "
+              className="d-flex align-items-center gap-2 mt-2 text-dark fs-5 fw-bold text-decoration-none tracking-tight"
             >
               <SiShopware />
               Rent a Ride
@@ -78,14 +59,14 @@ const UserProfileSidebar = () => {
             {/* hide sidebar button */}
             <TooltipComponent content={"menu"} position="BottomCenter">
               <button
-                className="text-xl rounded-full p-3 mt-4 block  hover:bg-gray-500"
+                className="btn btn-light rounded-circle p-2 mt-2"
                 onClick={() => {dispatch(showSidebarOrNot(false))}}
               >
-                <MdOutlineCancel />
+                <MdOutlineCancel className="fs-5" />
               </button>
             </TooltipComponent>
           </div>
-          <div className="mt-10">
+          <div className="mt-4">
             {links.map((cur, idx) => (
               <div key={idx}>
                 {cur.links.map((link) => (
@@ -102,7 +83,7 @@ const UserProfileSidebar = () => {
                     }
                   >
                     {link.icon}
-                    <span className="capitalize text-gray-600">
+                    <span className="text-capitalize">
                       {link.name}
                     </span>
                   </NavLink>
@@ -110,30 +91,23 @@ const UserProfileSidebar = () => {
               </div>
             ))}
 
-            <div className="flex flex-col gap-y-5">
-
-            <div className="flex items-center mt-10 gap-2">
-                <button
-                  type="button"
-                  className="ml-4 text-red-400"
-                  onClick={handleSignout}
-                >
-                  SignOut
-                </button>
-                <CiLogout />
-              </div>
-              <div className="ml-4">
+            <div className="d-flex flex-column gap-3 mt-4 px-3">
               <button
-                className="text-red-400"
+                type="button"
+                className="btn btn-outline-danger d-flex align-items-center gap-2 justify-content-start border-0 text-start px-0 py-2"
+                onClick={handleSignout}
+              >
+                <CiLogout className="fs-5" />
+                SignOut
+              </button>
+              
+              <button
+                className="btn btn-outline-danger d-flex align-items-center gap-2 justify-content-start border-0 text-start px-0 py-2"
                 onClick={handleDelete}
                 type="button"
               >
                 {isLoading ? "Loading..." : "Delete User"}
               </button>
-              </div>
-              
-
-              
             </div>
           </div>
         </>

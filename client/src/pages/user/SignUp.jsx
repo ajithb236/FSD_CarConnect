@@ -32,19 +32,12 @@ function SignUp() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      setLoading(false);
-      if (data.succes === false) {
-        setError(true);
-        return;
-      }
-      setError(false);
-      navigate("/signin");
+      // Mock signup success
+      setTimeout(() => {
+        setLoading(false);
+        setError(false);
+        navigate("/signin");
+      }, 800);
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -53,90 +46,87 @@ function SignUp() {
 
   return (
     <>
-      <div
-        className={`pb-10 max-w-lg mx-auto mt-16  rounded-lg overflow-hidden  shadow-2xl`}
-      >
-        <div
-          className={` green px-6 py-2   rounded-t-lg flex justify-between items-center`}
-        >
-          <h1 className={`${styles.heading2} text-[28px]`}>Sign Up</h1>
-          <Link to={"/"}>
-            <div className=" px-3  font-bold  hover:bg-green-300 rounded-md  shadow-inner">
-              x
-            </div>
-          </Link>
+      <div className="container py-5">
+        <div className="card shadow mt-5 mx-auto border-0" style={{ maxWidth: "500px" }}>
+          <div className="card-header bg-success bg-gradient text-white px-4 py-3 d-flex justify-content-between align-items-center">
+            <h1 className="h3 mb-0">Sign Up</h1>
+            <Link to={"/"} className="text-white text-decoration-none">
+              <div className="btn btn-outline-light btn-sm fw-bold border-0">
+                x
+              </div>
+            </Link>
+          </div>
+
+          <div className="card-body p-4 p-md-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column gap-3">
+              <div>
+                <input
+                  type="text"
+                  id="username"
+                  className={`form-control ${errors.username ? 'is-invalid' : ''} bg-light`}
+                  placeholder="UserName"
+                  {...register("username")}
+                />
+                {errors.username && (
+                  <div className="invalid-feedback" style={{ fontSize: "12px" }}>
+                    {errors.username.message}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  id="email"
+                  className={`form-control ${errors.email ? 'is-invalid' : ''} bg-light`}
+                  placeholder="Email"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <div className="invalid-feedback" style={{ fontSize: "12px" }}>
+                    {errors.email.message}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <input
+                  type="password"
+                  id="password"
+                  className={`form-control ${errors.password ? 'is-invalid' : ''} bg-light`}
+                  placeholder="Password"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <div className="invalid-feedback" style={{ fontSize: "12px" }}>
+                    {errors.password.message}
+                  </div>
+                )}
+              </div>
+
+              <button
+                className="btn btn-success mt-2"
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading ..." : "Register"}
+              </button>
+              
+              <div className="d-flex justify-content-between mt-2">
+                <p className="small mb-0">
+                  Have an account?{" "}
+                  <Link to={`/signin`} className="text-primary text-decoration-none">
+                    Sign in
+                  </Link>
+                </p>
+                {isError && (
+                  <p className="small text-danger mb-0">
+                    something went wrong
+                  </p>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
-
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 pt-10 px-5"
-        >
-          <div>
-            <input
-              type="text"
-              id="username"
-              className="text-black bg-slate-100 p-3 rounded-md w-full"
-              placeholder="UserName"
-              {...register("username")}
-            />
-            {errors.username && (
-              <p className="text-red-500 text-[8px] pt-1">
-                {" "}
-                {errors.username.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="email"
-              className="text-black bg-slate-100 p-3 rounded-md w-full"
-              placeholder="Email"
-              {...register("email")}
-            />
-
-            {errors.email && (
-              <p className="text-red-500 text-[8px] pt-1">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <input
-              type="text"
-              id="password"
-              className="text-black bg-slate-100 p-3 rounded-md w-full"
-              placeholder="Password"
-              {...register("password", { required: true, minLength: 6 })}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-[8px] pt-1">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
-          <button
-            className={`${styles.button}  disabled:bg-slate-500 text-black disabled:text-white`}
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading ..." : "Register"}
-          </button>
-          <div className="flex justify-between">
-            <p className="text-[10px]">
-              Have a account?{" "}
-              <span className="text-blue-600">
-                {" "}
-                <Link to={`/signin`}>Sign in</Link>
-              </span>
-            </p>
-            <p className="text-[10px] text-red-600">
-              {isError && "something went wrong"}
-            </p>
-          </div>
-        </form>
       </div>
     </>
   );

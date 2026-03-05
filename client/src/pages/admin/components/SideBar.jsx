@@ -17,49 +17,43 @@ const SideBar = () => {
   const dispatch = useDispatch();
 
   const activeLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-black bg-blue-50 text-md  m-2";
-    //in normal mode there was dark:text-gray-200 i removed it
+    "d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-dark bg-primary bg-opacity-10 text-decoration-none mb-2";
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-md text-gray-700   dark:hover:text-black hover:bg-slate-100 m-2";
+    "d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-secondary text-decoration-none mb-2 hover-bg-light";
 
   //SignOut
   const handleSignout = async () => {
-    const res = await fetch("/api/admin/signout", {
-      method: "GET",
-    });
-    const data = await res.json();
-    if (data) {
+    // MOCK SIGN OUT
       dispatch(signOut());
       navigate("/signin");
-    }
+      localStorage.removeItem("userRole");
   };
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="vh-100 overflow-auto pb-5 px-3 bg-white border-end">
       {activeMenu && (
         <>
-          <div className="flex justify-between items-center">
+          <div className="d-flex justify-content-between align-items-center pt-3">
             <Link
               to={`/adminDashboard`}
-              onClick={() => {}}
-              className="items-center flex gap-3 mt-4 ml-3 text-xl font-extrabold text-blue-500 tracking-tight "
+              className="d-flex align-items-center gap-2 mt-2 text-primary fs-5 fw-bold text-decoration-none tracking-tight"
             >
               <SiShopware />
               Rent a Ride
             </Link>
             <TooltipComponent content={"menu"} position="BottomCenter">
               <button
-                className="text-xl rounded-full p-3 mt-4 block md:hidden hover:bg-gray-500"
+                className="btn btn-light rounded-circle p-2 mt-2 d-md-none"
                 onClick={() => {}}
               >
-                <MdOutlineCancel />
+                <MdOutlineCancel className="fs-5" />
               </button>
             </TooltipComponent>
           </div>
-          <div className="mt-10">
+          <div className="mt-4">
             {links.map((cur, idx) => (
               <div key={idx}>
-                <p className="text-gray-700 m-3 mt-4 text-uppercase">{cur.title}</p>
+                <p className="text-secondary small fw-bold text-uppercase mt-4 mb-2 px-3">{cur.title}</p>
                 {cur.links.map((link) => (
                   <NavLink
                     to={`/adminDashboard/${link.name}`}
@@ -74,20 +68,21 @@ const SideBar = () => {
                     }
                   >
                     {link.icon}
-                    <span className="capitalize text-gray-600">{link.name}</span>
+                    <span className="text-capitalize">{link.name}</span>
                   </NavLink>
                 ))}
               </div>
             ))}
-            <div className="flex items-center mt-10 gap-2">
+            
+            <div className="mt-4 px-3">
               <button
                 type="button"
-                className="ml-4 text-red-400"
+                className="btn btn-outline-danger d-flex align-items-center gap-2 justify-content-start border-0 text-start px-0 py-2 w-100"
                 onClick={handleSignout}
               >
+                <CiLogout className="fs-5" />
                 SignOut
               </button>
-              <CiLogout />
             </div>
           </div>
         </>

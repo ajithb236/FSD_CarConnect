@@ -68,101 +68,90 @@ const Filter = () => {
 
   
   return (
-    <div className="bg-white sticky top-5 scroll-m-9">
-      <div className="sticky top-0 left-0 right-0  ">
-        <div className="filterComponent flex h-full max-w-[320px] lg:max-w-[350px]  flex-col  bg-white  shadow-xl mx-auto">
-          <div className="flex items-center justify-between px-4 py-2">
-            <h2 className="text-lg font-medium text-gray-900">Filters</h2>
-            <button
-              type="button"
-              className="-mr-2  flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
-              onClick={()=> setFilterOpen(!filterOpen) }
-            >
-             
-              <div className={`plusicon ${filterOpen ? 'iconClose' : 'plusiconOpen'}`}><GoPlus className="plusicon"/></div>
-            
-            </button>
-          </div>
+    <div className="bg-white sticky-top pt-3">
+      <div className="card shadow-sm mx-auto" style={{ maxWidth: '350px' }}>
+        <div className="card-header bg-white d-flex align-items-center justify-content-between py-3">
+          <h2 className="h5 mb-0 text-dark">Filters</h2>
+          <button
+            type="button"
+            className="btn btn-light btn-sm d-flex align-items-center justify-content-center"
+            onClick={() => setFilterOpen(!filterOpen)}
+            style={{ width: '40px', height: '40px' }}
+          >
+            <GoPlus className={`fs-4 ${filterOpen ? 'text-danger' : 'text-secondary'}`} style={{ transform: filterOpen ? 'rotate(45deg)' : 'none', transition: 'transform 0.2s' }} />
+          </button>
+        </div>
 
-          {/* <!-- Filters  form --> */}
-
-         
-          <div className={` border-t border-gray-200 dropdown-content ${filterOpen ? 'open opacity-100 fade-in' : 'opacity-0 fade-out'} `}>
-            <h3 className="sr-only">Categories</h3>
-
-            <div className="border-t border-gray-200 px-4 py-6">
-              <div className="flex flex-col justify-center  items-start gap-y-4 w-full">
-                <form className="w-full" onSubmit={handleSubmit(handleData)}>
-                  <div className="w-full mb-7 ">
-                    <div className="mb-5 flex justify-between items-center">
-                      <div>Type</div>{" "}
-                      <div>
-                        <GoPlus color="gray" />
-                      </div>
-                    </div>
-                    <div>
-                      <FormGroup>
-                        <FormControlLabel
-                          control={
-                            <Controller
-                              name="suv"
-                              control={control}
-                              render={({ field }) => (
-                                <Checkbox
-                                  {...field}
-                                  checked={field["value"] ?? false}
-                                />
-                              )}
+        {/* <!-- Filters form --> */}
+        <div className={`collapse ${filterOpen ? 'show' : ''}`} id="filterCollapse">
+          <div className="card-body">
+            <form className="w-100" onSubmit={handleSubmit(handleData)}>
+              <div className="mb-4">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <span className="fw-medium">Type</span>
+                  <GoPlus className="text-secondary" />
+                </div>
+                <div>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Controller
+                          name="suv"
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              checked={field["value"] ?? false}
                             />
-                          }
-                          label="Suv"
+                          )}
                         />
-                        <FormControlLabel
-                          control={
-                            <Controller
-                              name="sedan"
-                              control={control}
-                              render={({ field }) => (
-                                <Checkbox
-                                  {...field}
-                                  checked={field["value"] ?? false}
-                                />
-                              )}
+                      }
+                      label="Suv"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Controller
+                          name="sedan"
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              checked={field["value"] ?? false}
                             />
-                          }
-                          label="Sedan"
+                          )}
                         />
-                        <FormControlLabel
-                          control={
-                            <Controller
-                              name="hatchback"
-                              control={control}
-                              render={({ field }) => (
-                                <Checkbox
-                                  {...field}
-                                  checked={field["value"] ?? false}
-                                />
-                              )}
+                      }
+                      label="Sedan"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Controller
+                          name="hatchback"
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              checked={field["value"] ?? false}
                             />
-                          }
-                          label="Hatchback"
+                          )}
                         />
-                      </FormGroup>
-                    </div>
-                  </div>
-
-                  <div className="mt-7 pt-7 border-t border-t-gray-300">
-                    <button
-                      type="submit"
-                      className="px-6 py-2 bg-black text-white rounded-md"
-                      onClick={handleClick}
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </form>
+                      }
+                      label="Hatchback"
+                    />
+                  </FormGroup>
+                </div>
               </div>
-            </div>
+
+              <div className="mt-4 pt-3 border-top">
+                <button
+                  type="submit"
+                  className="btn btn-dark w-100"
+                  onClick={handleClick}
+                >
+                  Apply
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

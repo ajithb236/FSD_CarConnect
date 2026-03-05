@@ -3,9 +3,10 @@ import { Outlet, Navigate } from "react-router-dom";
 
 function PrivateRoute() {
   const { currentUser } = useSelector((state) => state.user);
+  const userRole = localStorage.getItem("userRole");   
   //i should make a isUser field or this will become so messy in future
   const isUserOnly =
-    currentUser && !currentUser.isAdmin && !currentUser.isVendor;
+    userRole === 'user' || (currentUser && !currentUser.isAdmin && !currentUser.isVendor);
   return isUserOnly ? <Outlet /> : <Navigate to={"/signin"} />;
 }
 
