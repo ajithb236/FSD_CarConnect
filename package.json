@@ -1,0 +1,12 @@
+{
+  "name": "rent-a-ride",
+  "version": "1.0.0",
+  "description": "Rent-a-Ride - Car Rental Platform",
+  "private": true,
+  "scripts": {
+    "dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "preview": "cd client && npm run preview",
+    "lint": "cd client && npm run lint"
+  }
+}
