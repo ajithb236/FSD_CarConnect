@@ -1,7 +1,7 @@
 {
-  "name": "rent-a-ride",
+  "name": "car-connect",
   "version": "1.0.0",
-  "description": "Rent-a-Ride - Car Rental Platform",
+  "description": "Car Connect - Car Rental Platform",
   "private": true,
   "scripts": {
     "dev": "cd client && npm run dev",

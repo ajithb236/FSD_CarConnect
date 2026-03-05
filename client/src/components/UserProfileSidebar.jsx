@@ -54,7 +54,7 @@ const UserProfileSidebar = () => {
               className="d-flex align-items-center gap-2 mt-2 text-dark fs-5 fw-bold text-decoration-none tracking-tight"
             >
               <SiShopware />
-              Rent a Ride
+              Car Connect
             </Link>
             {/* hide sidebar button */}
             <TooltipComponent content={"menu"} position="BottomCenter">

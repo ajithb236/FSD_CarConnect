@@ -8,14 +8,14 @@ const Footers  = () =>  {
       <Container>
         <Row className="gy-4 pb-4">
           <Col md={4} className="mb-4 mb-md-0">
-            <h1 className="fw-bold fs-3 mb-3 text-white">Rent a Ride</h1>
+            <h1 className="fw-bold fs-3 mb-3 text-white">Car Connect</h1>
             <p className="text-secondary">Your reliable partner for car rentals. Find the best vehicles at the most affordable prices anywhere, anytime.</p>
           </Col>
           
           <Col md={2} sm={4} className="mt-4 mt-sm-0">
             <h5 className="text-uppercase mb-3 mt-md-0">About</h5>
             <ul className="list-unstyled">
-              <li className="mb-2"><a href="#" className="text-secondary text-decoration-none">Rent a Ride</a></li>
+              <li className="mb-2"><a href="#" className="text-secondary text-decoration-none">Car Connect</a></li>
               <li className="mb-2"><a href="#" className="text-secondary text-decoration-none">Car rental</a></li>
             </ul>
           </Col>
@@ -41,7 +41,7 @@ const Footers  = () =>  {
         
         <Row className="align-items-center mt-4">
           <Col sm={6} className="text-center text-sm-start mb-3 mb-sm-0">
-            <span className="text-secondary">© 2024 <a href="#" className="text-white text-decoration-none">Rent a Ride</a>. All rights reserved.</span>
+            <span className="text-secondary">© 2024 <a href="#" className="text-white text-decoration-none">Car Connect</a>. All rights reserved.</span>
           </Col>
           <Col sm={6} className="d-flex justify-content-center justify-content-sm-end gap-3">
             <a href="https://www.linkedin.com/in/jeevan-joji-25b799275/" className="text-secondary fs-5"><BsLinkedin /></a>

@@ -39,7 +39,7 @@ const SideBar = () => {
               className="d-flex align-items-center gap-2 mt-2 text-primary fs-5 fw-bold text-decoration-none tracking-tight"
             >
               <SiShopware />
-              Rent a Ride
+              Car Connect
             </Link>
             <TooltipComponent content={"menu"} position="BottomCenter">
               <button

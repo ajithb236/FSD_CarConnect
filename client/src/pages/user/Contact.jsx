@@ -16,7 +16,7 @@ function Contact() {
     {
       icon: FaEnvelope,
       title: "Email",
-      details: "support@rentaride.com"
+      details: "support@carconnect.com"
     },
     {
       icon: FaClock,
@@ -91,7 +91,7 @@ function Contact() {
           {/* Team Info */}
           <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Our Team</h3>
-            <p className="text-gray-600">Rent-a-Ride operates from MIT Manipal campus with a dedicated team of professionals committed to providing the best car rental experience.</p>
+            <p className="text-gray-600">Car Connect operates from MIT Manipal campus with a dedicated team of professionals committed to providing the best car rental experience.</p>
           </div>
         </div>
       </div>
